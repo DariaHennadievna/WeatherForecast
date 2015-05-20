@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AFNetworking/AFNetworking.h>
+#import <CoreLocation/CoreLocation.h>
+#import <CoreLocation/CLLocationManager.h>
+#import <CoreLocation/CLLocationManagerDelegate.h>
 
-@interface ViewController : UIViewController
-
+@interface ViewController : UIViewController <CLLocationManagerDelegate>
 
 @end
 
