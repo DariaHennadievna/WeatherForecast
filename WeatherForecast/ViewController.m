@@ -76,6 +76,7 @@
     NSLog(@"I'm here!!!");
     CLLocation *location = [locations lastObject];
     NSLog(@"location: lat = %f, lon = %f", location.coordinate.latitude, location.coordinate.longitude);
+    
 }
 
 
