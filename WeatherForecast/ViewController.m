@@ -75,8 +75,45 @@
 {
     NSLog(@"I'm here!!!");
     CLLocation *location = [locations lastObject];
+    if(locations.count)
+    {
+        [self.locationManager stopUpdatingLocation];
+    }
     NSLog(@"location: lat = %f, lon = %f", location.coordinate.latitude, location.coordinate.longitude);
+    NSString *coordinateLon = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+    NSString *coordinateLat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
     
+    NSDictionary *coordinates = @{@"lon":coordinateLon,
+                                  @"lat":coordinateLat};
+    
+    //AFHTTPRequestOperationManager *requestOperationManager = [AFHTTPRequestOperationManager manager];
+    
+    NSMutableDictionary *parameters = [@{@"units": @"metric", @"lang":@"en", @"cnt":@"3",
+                                 @"APPID":@"cea4a70a4bf1d91f0c4e71191e145657"} mutableCopy];
+    
+    [parameters addEntriesFromDictionary:coordinates];
+    
+   /* [requestOperationManager GET:@"http://api.openweathermap.org/data/2.5/forecast/daily?" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@ class = %@", responseObject, [responseObject class] );
+        self.response = responseObject;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];*/
+    [self callMethodWithParams:parameters];
+}
+
+- (void)callMethodWithParams:(NSDictionary *)params
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:@"http://api.openweathermap.org/data/2.5/forecast/daily?" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+    {
+        NSLog(@"JSON: %@", responseObject);
+    }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error)
+        {
+        NSLog(@"Error: %@", error);
+    }];
+
 }
 
 
